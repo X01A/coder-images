@@ -8,7 +8,7 @@ RUN apt upgrade -y
 RUN apt install -y build-essential
 RUN apt install -y gcc g++ binutils patch bzip2 flex make gettext pkg-config unzip zlib1g-dev libc6-dev subversion libncurses5-dev gawk sharutils curl libxml-parser-perl ocaml-nox ocaml ocaml-findlib python-yaml libssl-dev libfdt-dev
 RUN apt install -y device-tree-compiler u-boot-tools
-RUN apt install -y libssl1.0-dev python3-distutils git wget curl python-pip sudo libelf-dev
+RUN apt install -y libssl-dev python3-distutils git wget curl python3-pip sudo libelf-dev
 
 RUN apt install -y zsh rsync upx vim
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
