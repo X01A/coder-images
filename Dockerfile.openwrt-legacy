@@ -1,4 +1,22 @@
-FROM docker.io/indexyz/openwrt-build-env:legacy
+FROM ubuntu:20.04
+
+RUN apt update
+RUN apt upgrade -y
+RUN apt install -y build-essential
+RUN apt install -y gcc g++ binutils patch bzip2 flex make gettext pkg-config unzip zlib1g-dev libc6-dev subversion libncurses5-dev gawk sharutils curl libxml-parser-perl ocaml-nox ocaml ocaml-findlib python-yaml libssl-dev libfdt-dev
+RUN apt install -y device-tree-compiler u-boot-tools
+RUN apt install -y libssl1.0-dev python3-distutils git wget curl python-pip sudo libelf-dev
+RUN pip install j2cli
+
+RUN apt install -y zsh rsync upx vim
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+RUN echo "export FORCE_UNSAFE_CONFIGURE=1" >> /root/.zshrc
+
+RUN wget -O /go-linux-amd64.tar.gz https://go.dev/dl/go1.22.0.linux-amd64.tar.gz
+RUN rm -rf /usr/local/go && tar -C /usr/local -xzf /go-linux-amd64.tar.gz
+
+ENV PATH="${PATH}:/usr/local/go/bin"
+RUN git config --global --add safe.directory '*'
 
 RUN useradd \
     --create-home \
