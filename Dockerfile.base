@@ -3,8 +3,11 @@ FROM codercom/enterprise-base:ubuntu
 # Run everything as root
 USER root
 
+RUN apt-get update -y && \
+    apt-get install nano -y
+
 # Install go
-RUN curl -L "https://go.dev/dl/go1.25.linux-amd64.tar.gz" | tar -C /usr/local -xzvf -
+RUN curl -L "https://go.dev/dl/go1.25.0.linux-amd64.tar.gz" | tar -C /usr/local -xzvf -
 
 # Setup go env vars
 ENV GOROOT=/usr/local/go
@@ -13,7 +16,6 @@ ENV PATH=$PATH:$GOROOT/bin
 ENV GOPATH=/home/coder/go
 ENV GOBIN=$GOPATH/bin
 ENV PATH=$PATH:$GOBIN
-
 
 # Install whichever Node version is LTS
 RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash -
