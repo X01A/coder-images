@@ -17,6 +17,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      images:
+      - openwrt-legacy
+      - base
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -32,7 +37,8 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: Dockerfile.openwrt-legacy
+          file: Dockerfile.${{ matrix.images }}
           push: true
-          tags: ghcr.io/x01a/coder-images:openwrt-legacy
+          tags: ghcr.io/x01a/coder-images:${{ matrix.images }}
+
 

@@ -1,0 +1,32 @@
+FROM codercom/enterprise-base:ubuntu
+
+# Run everything as root
+USER root
+
+# Install go
+RUN curl -L "https://go.dev/dl/go1.20.linux-amd64.tar.gz" | tar -C /usr/local -xzvf -
+
+# Setup go env vars
+ENV GOROOT=/usr/local/go
+ENV PATH=$PATH:$GOROOT/bin
+
+ENV GOPATH=/home/coder/go
+ENV GOBIN=$GOPATH/bin
+ENV PATH=$PATH:$GOBIN
+
+
+# Install whichever Node version is LTS
+RUN curl -sL https://deb.nodesource.com/setup_lts.x | bash -
+RUN DEBIAN_FRONTEND="noninteractive" apt-get update -y && \
+    apt-get install -y nodejs
+
+# Install Yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN DEBIAN_FRONTEND="noninteractive" apt-get update && apt-get install -y yarn
+
+# Install pnpm
+RUN curl -fsSL https://get.pnpm.io/install.sh | sh -
+
+# Set back to coder user
+USER coder
