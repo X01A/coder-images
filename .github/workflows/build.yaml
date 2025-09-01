@@ -18,9 +18,10 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      images:
-      - openwrt-legacy
-      - base
+      matrix:
+        images:
+        - openwrt-legacy
+        - base
 
     steps:
       - name: Checkout repository
