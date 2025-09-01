@@ -30,7 +30,7 @@ RUN npm install --global corepack@latest && \
     corepack enable pnpm
 
 # Install uv
-RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 # Install codex
 RUN npm install -g @openai/codex
