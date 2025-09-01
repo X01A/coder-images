@@ -26,7 +26,8 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN DEBIAN_FRONTEND="noninteractive" apt-get update && apt-get install -y yarn
 
 # Install pnpm
-RUN curl -fsSL https://get.pnpm.io/install.sh | sh -
+RUN npm install --global corepack@latest && \
+    corepack enable pnpm
 
 # Set back to coder user
 USER coder
