@@ -37,5 +37,8 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 # Install codex
 RUN npm install -g @openai/codex
 
+# Install claude code
+RUN npm install -g @anthropic-ai/claude-code
+
 # Set back to coder user
 USER coder
