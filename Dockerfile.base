@@ -66,5 +66,8 @@ RUN curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/
 
 ENV PATH="${PATH}:/nix/var/nix/profiles/default/bin"
 
+# Install nixd
+RUN nix profile install github:nix-community/nixd
+
 # Set back to coder user
 USER coder
