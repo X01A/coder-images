@@ -36,6 +36,9 @@ RUN npm install --global corepack@latest && \
 # Install uv
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
+# Install rust
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
 # Install codex
 RUN npm install -g @openai/codex
 
