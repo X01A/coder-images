@@ -39,6 +39,8 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 # Install rust
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
 
+ENV PATH=$PATH:/root/.cargo/bin
+
 RUN rustup component add rust-src
 RUN rustup component add rust-analyzer
 
