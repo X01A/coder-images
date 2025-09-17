@@ -46,6 +46,7 @@ RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y --
 RUN rustup component add rust-src
 RUN rustup component add rust-analyzer
 RUN rustup component add rust-analysis
+RUN rustup component add rls
 
 # Install codex
 RUN npm install -g @openai/codex
