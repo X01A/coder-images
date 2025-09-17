@@ -36,10 +36,12 @@ RUN npm install --global corepack@latest && \
 # Install uv
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# Install rust
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y
+ENV RUSTUP_HOME=/usr/local/rustup
+ENV CARGO_HOME=/usr/local/cargo
+ENV PATH=$PATH:/usr/local/cargo/bin
 
-ENV PATH=$PATH:/root/.cargo/bin
+# Install rust
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | bash -s -- -y --no-modify-path
 
 RUN rustup component add rust-src
 RUN rustup component add rust-analyzer
