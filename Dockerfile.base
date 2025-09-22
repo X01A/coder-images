@@ -48,6 +48,16 @@ RUN go install github.com/evilmartians/lefthook@latest
 # Install goimports
 RUN go install golang.org/x/tools/cmd/goimports@latest
 
+# Install ETCD
+ENV ETCD_VER=3.6.5
+
+RUN curl -L https://github.com/etcd-io/etcd/releases/download/v${ETCD_VER}/etcd-v${ETCD_VER}-linux-amd64.tar.gz -o /tmp/etcd.tgz && \
+    tar xzvf /tmp/etcd.tgz -C /tmp --strip-components=1 --no-same-owner && \
+    mv etcd /usr/local/bin && \
+    mv etcdctl /usr/local/bin && \
+    mv etcdutl /usr/local/bin && \
+    rm -f /tmp/etcd.tgz
+
 # Install kubectl
 RUN curl -L "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" -o /usr/bin/kubectl && \
     chmod +x /usr/bin/kubectl
