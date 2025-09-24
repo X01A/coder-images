@@ -54,8 +54,8 @@ ENV ETCD_VER=3.6.5
 RUN curl -L https://github.com/etcd-io/etcd/releases/download/v${ETCD_VER}/etcd-v${ETCD_VER}-linux-amd64.tar.gz -o /tmp/etcd.tgz && \
     tar xzvf /tmp/etcd.tgz -C /tmp --strip-components=1 --no-same-owner && \
     mv /tmp/etcd /usr/local/bin && \
-    mv /tmpetcdctl /usr/local/bin && \
-    mv /tmpetcdutl /usr/local/bin && \
+    mv /tmp/etcdctl /usr/local/bin && \
+    mv /tmp/etcdutl /usr/local/bin && \
     rm -f /tmp/etcd.tgz
 
 # Install kubectl
