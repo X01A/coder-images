@@ -52,7 +52,7 @@ RUN go install golang.org/x/tools/cmd/goimports@latest
 ENV ETCD_VER=3.6.5
 
 RUN curl -L https://github.com/etcd-io/etcd/releases/download/v${ETCD_VER}/etcd-v${ETCD_VER}-linux-amd64.tar.gz -o /tmp/etcd.tgz && \
-    tar xzvf /tmp/etcd.tgz -C /tmp --strip-components=1 --no-same-owner && \
+    tar xzvf /tmp/etcd.tgz -C /tmp --strip-components=2 --no-same-owner && \
     mv etcd /usr/local/bin && \
     mv etcdctl /usr/local/bin && \
     mv etcdutl /usr/local/bin && \
