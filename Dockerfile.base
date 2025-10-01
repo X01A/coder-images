@@ -6,7 +6,12 @@ USER root
 RUN apt-get update -y && \
     apt-get install nano -y
 
+RUN wget -qO - 'https://proget.makedeb.org/debian-feeds/prebuilt-mpr.pub' | gpg --dearmor | tee /usr/share/keyrings/prebuilt-mpr-archive-keyring.gpg 1> /dev/null && \
+    echo "deb [arch=all,$(dpkg --print-architecture) signed-by=/usr/share/keyrings/prebuilt-mpr-archive-keyring.gpg] https://proget.makedeb.org prebuilt-mpr $(lsb_release -cs)" | tee /etc/apt/sources.list.d/prebuilt-mpr.list
+
 RUN apt-get update -y
+# Install just
+RUN apt-get install just -y
 
 # Install go
 RUN curl -L "https://go.dev/dl/go1.25.0.linux-amd64.tar.gz" | tar -C /usr/local -xzvf -
@@ -84,17 +89,17 @@ RUN  curl -L -o kubebuilder "https://go.kubebuilder.io/dl/latest/$(go env GOOS)/
 RUN curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | bash
 
 # Install nix
-RUN curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install linux \
-  --extra-conf "system-features = kvm" \
-  --init none \
-  --no-confirm \
-  --determinate
+# RUN curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install linux \
+#   --extra-conf "system-features = kvm" \
+#   --init none \
+#   --no-confirm \
+#   --determinate
 
-ENV PATH="${PATH}:/nix/var/nix/profiles/default/bin"
+# ENV PATH="${PATH}:/nix/var/nix/profiles/default/bin"
 
 # Install nixd
-RUN nix profile add github:nix-community/nixd
-RUN nix profile add github:nixos/nixpkgs#just
+# RUN nix profile add github:nix-community/nixd
+# RUN nix profile add github:nixos/nixpkgs#just
 
 # Install php
 # prevent Debian's PHP packages from being installed
