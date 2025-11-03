@@ -63,6 +63,9 @@ RUN npm install -g @openai/codex
 # Install claude code
 RUN npm install -g @anthropic-ai/claude-code
 
+# Install openspec
+RUN npm install -g @fission-ai/openspec@latest
+
 # Install lefthook
 RUN go install github.com/evilmartians/lefthook@latest
 
