@@ -67,10 +67,10 @@ RUN npm install -g @anthropic-ai/claude-code
 RUN npm install -g @fission-ai/openspec@latest
 
 # Install lefthook
-RUN go install github.com/evilmartians/lefthook@latest
+RUN GOPATH=/usr/local/go go install github.com/evilmartians/lefthook@latest
 
 # Install goimports
-RUN go install golang.org/x/tools/cmd/goimports@latest
+RUN GOPATH=/usr/local/go go install golang.org/x/tools/cmd/goimports@latest
 
 # Install ETCD
 ENV ETCD_VER=3.6.5
