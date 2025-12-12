@@ -73,7 +73,7 @@ RUN GOPATH=/usr/local/go go install github.com/evilmartians/lefthook@latest
 RUN GOPATH=/usr/local/go go install golang.org/x/tools/cmd/goimports@latest
 
 # Install ETCD
-ENV ETCD_VER=3.6.5
+ENV ETCD_VER=3.6.6
 
 RUN curl -L https://github.com/etcd-io/etcd/releases/download/v${ETCD_VER}/etcd-v${ETCD_VER}-linux-amd64.tar.gz -o /tmp/etcd.tgz && \
     tar xzvf /tmp/etcd.tgz -C /tmp --strip-components=1 --no-same-owner && \
