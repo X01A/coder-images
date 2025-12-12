@@ -82,6 +82,11 @@ RUN curl -L https://github.com/etcd-io/etcd/releases/download/v${ETCD_VER}/etcd-
     mv /tmp/etcdutl /usr/local/bin && \
     rm -f /tmp/etcd.tgz
 
+ENV RIPGREP_VER=15.1.0
+RUN curl -LO https://github.com/BurntSushi/ripgrep/releases/download/${RIPGREP_VER}/ripgrep_${RIPGREP_VER}-1_amd64.deb -o /tmp/ripgrep.deb && \
+	dpkg -i /tmp/ripgrep.deb && \
+	rm -f /tmp/ripgrep.deb
+
 # Install kubectl
 RUN curl -L "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" -o /usr/bin/kubectl && \
     chmod +x /usr/bin/kubectl
