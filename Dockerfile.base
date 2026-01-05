@@ -1,17 +1,51 @@
-FROM codercom/enterprise-base:ubuntu
+FROM ubuntu:noble
 
-# Run everything as root
 USER root
-
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -y && \
-    apt-get install nano -y
+	apt-get install software-properties-common -y && \
+	add-apt-repository ppa:git-core/ppa && \
+	apt-get update -y && \
+    apt-get install --yes \
+		bash \
+		build-essential \
+		curl \
+		htop \
+		jq \
+		git \
+		locales \
+		man \
+		pipx \
+		python3 \
+		python3-pip \
+		software-properties-common \
+		sudo \
+		systemd \
+		systemd-sysv \
+		unzip \
+		vim \
+		wget \
+		rsync \
+		gnupg \
+		just \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN wget -qO - 'https://proget.makedeb.org/debian-feeds/prebuilt-mpr.pub' | gpg --dearmor | tee /usr/share/keyrings/prebuilt-mpr-archive-keyring.gpg 1> /dev/null && \
-    echo "deb [arch=all,$(dpkg --print-architecture) signed-by=/usr/share/keyrings/prebuilt-mpr-archive-keyring.gpg] https://proget.makedeb.org prebuilt-mpr $(lsb_release -cs)" | tee /etc/apt/sources.list.d/prebuilt-mpr.list
+# Generate the desired locale (en_US.UTF-8)
+RUN locale-gen en_US.UTF-8
 
-RUN apt-get update -y
-# Install just
-RUN apt-get install just -y
+# Make typing unicode characters in the terminal work.
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+
+# Remove the `ubuntu` user and add a user `coder` so that you're not developing as the `root` user
+RUN userdel -r ubuntu && \
+    useradd coder \
+    --create-home \
+    --shell=/bin/bash \
+    --uid=1000 \
+    --user-group && \
+    echo "coder ALL=(ALL) NOPASSWD:ALL" >>/etc/sudoers.d/nopasswd
 
 # Install go
 RUN curl -L "https://go.dev/dl/go1.25.0.linux-amd64.tar.gz" | tar -C /usr/local -xzvf -
@@ -185,12 +219,9 @@ ENV PHP_VERSION 8.4.13
 ENV PHP_URL="https://www.php.net/distributions/php-8.4.13.tar.xz" PHP_ASC_URL="https://www.php.net/distributions/php-8.4.13.tar.xz.asc"
 ENV PHP_SHA256="b4f27adf30bcf262eacf93c78250dd811980f20f3b90d79a3dc11248681842df"
 
+RUN chmod 1777 /tmp
+
 RUN set -eux; \
-	\
-	savedAptMark="$(apt-mark showmanual)"; \
-	apt-get update; \
-	apt-get install -y --no-install-recommends gnupg; \
-	rm -rf /var/lib/apt/lists/*; \
 	\
 	mkdir -p /usr/src; \
 	cd /usr/src; \
@@ -202,17 +233,11 @@ RUN set -eux; \
 	fi; \
 	\
 	curl -fsSL -o php.tar.xz.asc "$PHP_ASC_URL"; \
-	export GNUPGHOME="$(mktemp -d)"; \
 	for key in $GPG_KEYS; do \
 		gpg --batch --keyserver keyserver.ubuntu.com --recv-keys "$key"; \
 	done; \
 	gpg --batch --verify php.tar.xz.asc php.tar.xz; \
-	gpgconf --kill all; \
-	rm -rf "$GNUPGHOME"; \
-	\
-	apt-mark auto '.*' > /dev/null; \
-	apt-mark manual $savedAptMark > /dev/null; \
-	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false
+	gpgconf --kill all
 
 COPY php/docker-php-source /usr/local/bin/
 
