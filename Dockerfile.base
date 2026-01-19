@@ -95,7 +95,7 @@ RUN curl -fsSL https://deno.land/install.sh | sh
 RUN npm install -g @openai/codex
 
 # Install opencode
-RUN curl -fsSL https://opencode.ai/install | bash -s -- -b /usr/bin/opencode
+RUN curl -fsSL https://opencode.ai/install | INSTALL_DIR=/usr/bin bash
 
 # Install bun
 RUN curl -fsSL https://bun.sh/install | BUN_INSTALL=/usr bash
