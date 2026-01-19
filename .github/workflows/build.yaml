@@ -43,4 +43,6 @@ jobs:
           push: true
           tags: ghcr.io/x01a/coder-images:${{ matrix.images }}
 
-
+      - uses: dataaxiom/ghcr-cleanup-action@v1
+        with:
+          delete-untagged: true
