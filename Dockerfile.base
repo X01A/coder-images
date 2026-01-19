@@ -95,7 +95,10 @@ RUN curl -fsSL https://deno.land/install.sh | sh
 RUN npm install -g @openai/codex
 
 # Install opencode
-RUN curl -fsSL https://opencode.ai/install | bash
+RUN curl -fsSL https://opencode.ai/install | bash -s -- -b /usr/bin/opencode
+
+# Install bun
+RUN curl -fsSL https://bun.sh/install | BUN_INSTALL=/usr bash
 
 # Install claude code
 RUN npm install -g @anthropic-ai/claude-code
