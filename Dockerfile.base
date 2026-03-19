@@ -58,6 +58,8 @@ ENV GOPATH=/home/coder/go
 ENV GOBIN=$GOPATH/bin
 ENV PATH=$PATH:$GOBIN
 
+ENV PATH=$PATH:/home/coder/.local/bin
+
 # Install GH cli
 RUN (type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) \
 	&& sudo mkdir -p -m 755 /etc/apt/keyrings \
@@ -105,6 +107,12 @@ RUN npm install -g @anthropic-ai/claude-code
 
 # Install openspec
 RUN npm install -g @fission-ai/openspec@latest
+
+# Install rtk
+RUN curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh
+
+# Install zagi
+RUN curl -fsSL zagi.sh/install | sh
 
 # Install lefthook
 RUN GOPATH=/usr/local/go go install github.com/evilmartians/lefthook@latest
