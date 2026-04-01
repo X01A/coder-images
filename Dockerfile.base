@@ -99,6 +99,9 @@ RUN npm install -g @openai/codex
 # Install opencode
 RUN npm install -g opencode-ai
 
+# Install OpenCode extension manager
+RUN npm install -g ocx
+
 # Install bun
 RUN curl -fsSL https://bun.sh/install | BUN_INSTALL=/usr bash
 
