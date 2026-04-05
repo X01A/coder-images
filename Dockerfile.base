@@ -28,6 +28,7 @@ RUN apt-get update -y && \
 		rsync \
 		gnupg \
 		just \
+		tmux \
     && rm -rf /var/lib/apt/lists/*
 
 # Generate the desired locale (en_US.UTF-8)
