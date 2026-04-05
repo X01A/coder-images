@@ -72,6 +72,12 @@ RUN (type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) \
 	&& sudo apt update \
 	&& sudo apt install gh -y
 
+# Install zig
+ENV ZIG_VERSION=0.16.0
+RUN curl -L "https://ziglang.org/download/${ZIG_VERSION}/zig-linux-x86_64-${ZIG_VERSION}.tar.xz" | tar -C /usr/local -xJf - && \
+    mv /usr/local/zig-linux-x86_64-${ZIG_VERSION} /usr/local/zig && \
+    ln -s /usr/local/zig/zig /usr/local/bin/zig
+
 RUN wget -O- https://apt.releases.hashicorp.com/gpg | \
 		gpg --dearmor | \
 		sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null && \
