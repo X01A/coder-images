@@ -73,7 +73,7 @@ RUN (type -p wget >/dev/null || (sudo apt update && sudo apt install wget -y)) \
 	&& sudo apt install gh -y
 
 # Install zig
-ENV ZIG_VERSION=0.15.2
+ENV ZIG_VERSION=0.16.0
 RUN curl -L "https://ziglang.org/download/${ZIG_VERSION}/zig-x86_64-linux-${ZIG_VERSION}.tar.xz" | tar -C /usr/local -xJf - && \
     mv /usr/local/zig-x86_64-linux-${ZIG_VERSION} /usr/local/zig
 
